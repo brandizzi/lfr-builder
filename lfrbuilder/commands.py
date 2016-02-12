@@ -17,16 +17,27 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Liferay Builder.  If not, see <http://www.gnu.org/licenses/>.
 
-from setuptools import setup, find_packages
+import os.path
 
-setup(
-    name="Liferay Builder",
-    version="0.0.1-dev1",
-    author='Adam Victor Brandizzi',
-    author_email='adam@brandizzi.com.br',
-    description='A tool for helping building Liferay',
-    license='LGPLv3',
-    url='http://bitbucket.com/brandizzi/lfr-builder',
+import baker
 
-    packages=find_packages()
-)
+from lfrbuilder.dir import change_dir
+from lfrbuilder.appserverfile import get_property
+from lfrbuilder.build import build as lfrbuild
+
+@baker.command
+def build(repository='.', bundle=None, branch=None):
+    repository=os.path.expanduser(repository)
+
+    if bundle is None:
+        bundle = get_property('app.server.parent.dir')
+    else:
+        bundle = os.path.expanduser(bundle)
+
+    with change_dir(repository):
+        lfrbuild(
+            repository=repository,
+            bundle=bundle,
+            branch=branch
+        )
+

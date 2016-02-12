@@ -17,16 +17,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Liferay Builder.  If not, see <http://www.gnu.org/licenses/>.
 
-from setuptools import setup, find_packages
+import unittest
 
-setup(
-    name="Liferay Builder",
-    version="0.0.1-dev1",
-    author='Adam Victor Brandizzi',
-    author_email='adam@brandizzi.com.br',
-    description='A tool for helping building Liferay',
-    license='LGPLv3',
-    url='http://bitbucket.com/brandizzi/lfr-builder',
+import lfrbuilder.appserverfile import AppServerFile
 
-    packages=find_packages()
-)
+class TestAppServerFile(

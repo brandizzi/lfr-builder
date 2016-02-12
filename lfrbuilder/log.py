@@ -17,16 +17,24 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Liferay Builder.  If not, see <http://www.gnu.org/licenses/>.
 
-from setuptools import setup, find_packages
+import sys
 
-setup(
-    name="Liferay Builder",
-    version="0.0.1-dev1",
-    author='Adam Victor Brandizzi',
-    author_email='adam@brandizzi.com.br',
-    description='A tool for helping building Liferay',
-    license='LGPLv3',
-    url='http://bitbucket.com/brandizzi/lfr-builder',
+import decorator
 
-    packages=find_packages()
-)
+@decorator.decorator
+def log(f, *args, **kwargs):
+    call_message = 'DEBUG {name} - Calling {name} with {args}, {kwargs}'
+    print(call_message.format(name=f.__name__, args=args, kwargs=kwargs))
+
+    result = f(*args, **kwargs)
+
+    if result is not None:
+        result_message = 'DEBUG {name} - Result: {result}'
+        print(result_message.format(name=f.__name__, result=result))
+
+    return result
+
+def debug(message):
+    func_name = sys._getframe(1).f_code.co_name
+    
+    print('DEBUG {name} - {message}'.format(name=func_name, message=message))
