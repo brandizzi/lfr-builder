@@ -22,6 +22,31 @@ import os.path
 
 from lfrbuilder.log import log, debug
 
+
+class Properties(object):
+    """
+    A parser/writer for Java ".properties" files.
+    """
+
+    def __init__(self, source):
+        """
+        When creating a ``PropertiesFile``, it should receive a source. It is
+        the file-like object from which to read data.
+        """
+        self.values = {}
+        for line in source:
+            key, value = line.split('=')
+            self.values[key] = value
+
+    def __getitem__(self, key):
+        return self.values[key]
+
+    def __setitem__(self, key, value):
+        self.values[key] = value
+
+    def __str__(self):
+        return '\n'.join(k + '=' + v for k, v in self.values.items())
+
 @log
 def set_property(
         key, value, repository='.', user_name=None, base_file_name='app.server',
