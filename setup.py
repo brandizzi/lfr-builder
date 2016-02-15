@@ -21,12 +21,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="Liferay Builder",
-    version="0.0.1-dev1",
+    version="0.0.1.dev1",
     author='Adam Victor Brandizzi',
     author_email='adam@brandizzi.com.br',
     description='A tool for helping building Liferay',
     license='LGPLv3',
     url='http://bitbucket.com/brandizzi/lfr-builder',
 
-    packages=find_packages()
+    packages=find_packages(),
+    test_suite='lfrbuilder.tests'
 )
